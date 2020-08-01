@@ -58,4 +58,32 @@ class LoggerProxyTest extends TestCase
 
         $this->assertSame('Hello, Yoda!', $message[0]);
     }
+
+    public function testPrepareMessage()
+    {
+        $logger = Yii::getLogger();
+        $proxy = new LoggerProxy($logger);
+        $proxy->setPrepareMessage(function ($message, $context) {
+            return str_replace('%name%', $context['name'], $message);
+        });
+
+        $proxy->log(LogLevel::WARNING, 'Hello, %name%!', ['name' => 'Yoda']);
+        $message = end($logger->messages);
+
+        $this->assertSame('Hello, Yoda!', $message[0]);
+    }
+
+    public function testPrepareMessageReturnNull()
+    {
+        $logger = Yii::getLogger();
+        $proxy = new LoggerProxy($logger);
+        $proxy->setPrepareMessage(function () {
+            return null;
+        });
+
+        $proxy->log(LogLevel::WARNING, 'Hello, {name}!', ['name' => 'Yoda']);
+        $message = end($logger->messages);
+
+        $this->assertSame('Hello, Yoda!', $message[0]);
+    }
 }

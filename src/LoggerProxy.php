@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\Yii2\Psr\LoggerProxy;
 
+use Closure;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
@@ -23,6 +24,11 @@ class LoggerProxy implements LoggerInterface
      * @var string
      */
     protected $defaultCategory = 'application';
+
+    /**
+     * @var null|Closure
+     */
+    protected $prepareMessage;
 
     protected $levelMap = [
         LogLevel::EMERGENCY => Logger::LEVEL_ERROR,
@@ -63,6 +69,15 @@ class LoggerProxy implements LoggerInterface
     }
 
     /**
+     * @param Closure $callback
+     * @return void
+     */
+    public function setPrepareMessage(Closure $callback)
+    {
+        $this->prepareMessage = $callback;
+    }
+
+    /**
      * Logs with an arbitrary level.
      *
      * @param mixed $level
@@ -81,7 +96,8 @@ class LoggerProxy implements LoggerInterface
 
     protected function prepareMessage(string $message, array $context): string
     {
-        return preg_replace_callback('/{([\w.]+)}/', static function ($matches) use ($context) {
+        $result = $this->prepareMessage ? ($this->prepareMessage)($message, $context) : null;
+        return $result ?? preg_replace_callback('/{([\w.]+)}/', static function ($matches) use ($context) {
             $placeholderName = $matches[1];
             if (isset($context[$placeholderName])) {
                 return static::getString($context[$placeholderName]);
