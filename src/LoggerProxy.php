@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Vjik\Yii2\Psr\LoggerProxy;
 
 use Psr\Log\LoggerInterface;
@@ -70,7 +72,7 @@ class LoggerProxy implements LoggerInterface
         }, $message);
     }
 
-    protected function prepareLevel($level): string
+    protected function prepareLevel($level): int
     {
         return ArrayHelper::getValue($this->levelMap, $level, $this->defaultLevel);
     }
