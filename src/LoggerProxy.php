@@ -17,12 +17,12 @@ class LoggerProxy implements LoggerInterface
     /**
      * @var string[]
      */
-    public $categoryParams = [];
+    protected $categoryParams = [];
 
     /**
      * @var string
      */
-    public $defaultCategory = 'application';
+    protected $defaultCategory = 'application';
 
     protected $levelMap = [
         LogLevel::EMERGENCY => Logger::LEVEL_ERROR,
@@ -42,6 +42,24 @@ class LoggerProxy implements LoggerInterface
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * @param string $param
+     * @return void
+     */
+    public function addCategoryParam(string $param)
+    {
+        $this->categoryParams[] = $param;
+    }
+
+    /**
+     * @param string $category
+     * @return void
+     */
+    public function setDefaultCategory(string $category)
+    {
+        $this->defaultCategory = $category;
     }
 
     /**

@@ -28,7 +28,7 @@ class LoggerProxyTest extends TestCase
     {
         $logger = Yii::getLogger();
         $proxy = new LoggerProxy($logger);
-        $proxy->defaultCategory = 'psr3';
+        $proxy->setDefaultCategory('psr3');
 
         $proxy->log(LogLevel::INFO, 'test');
         $message = end($logger->messages);
@@ -40,7 +40,7 @@ class LoggerProxyTest extends TestCase
     {
         $logger = Yii::getLogger();
         $proxy = new LoggerProxy($logger);
-        $proxy->categoryParams = ['category'];
+        $proxy->addCategoryParam('category');
 
         $proxy->log(LogLevel::INFO, 'test', ['category' => 'psr3']);
         $message = end($logger->messages);
