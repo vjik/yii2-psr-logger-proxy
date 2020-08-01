@@ -66,7 +66,7 @@ class LoggerProxy implements LoggerInterface
         return preg_replace_callback('/{([\w.]+)}/', static function ($matches) use ($context) {
             $placeholderName = $matches[1];
             if (isset($context[$placeholderName])) {
-                return $this->getString($context[$placeholderName]);
+                return static::getString($context[$placeholderName]);
             }
             return $matches[0];
         }, $message);
@@ -81,13 +81,13 @@ class LoggerProxy implements LoggerInterface
     {
         foreach ($this->categoryParams as $key) {
             if (isset($context[$key])) {
-                return $this->getString($context[$key]);
+                return static::getString($context[$key]);
             }
         }
         return $this->defaultCategory;
     }
 
-    protected function getString($value): string
+    protected static function getString($value): string
     {
         if (
             !is_array($value) &&
