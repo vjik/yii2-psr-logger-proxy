@@ -1,0 +1,48 @@
+{
+    "name": "vjik/yii2-psr-logger-proxy",
+    "description": "PSR-3 compatible logger proxy for Yii2",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": [
+        "yii2",
+        "extension",
+        "psr",
+        "psr-3",
+        "logger"
+    ],
+    "authors": [
+        {
+            "name": "Sergei Predvoditelev",
+            "email": "sergey.predvoditelev@gmail.com"
+        }
+    ],
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/vjik/yii2-psr-logger-proxy/issues",
+        "source": "https://github.com/vjik/yii2-psr-logger-proxy"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "psr/log": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vjik\\Yii2\\Psr\\LoggerProxy\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vjik\\Yii2\\Psr\\LoggerProxyTests\\": "tests"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
