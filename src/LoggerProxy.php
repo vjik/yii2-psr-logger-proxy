@@ -28,7 +28,7 @@ class LoggerProxy implements LoggerInterface
     /**
      * @var null|Closure
      */
-    protected $prepareMessage;
+    protected $prepareMessage = null;
 
     protected $levelMap = [
         LogLevel::EMERGENCY => Logger::LEVEL_ERROR,
@@ -69,10 +69,10 @@ class LoggerProxy implements LoggerInterface
     }
 
     /**
-     * @param Closure $callback
+     * @param Closure|null $callback
      * @return void
      */
-    public function setPrepareMessage(Closure $callback)
+    public function setPrepareMessage(?Closure $callback)
     {
         $this->prepareMessage = $callback;
     }
